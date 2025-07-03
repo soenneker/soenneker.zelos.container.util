@@ -12,7 +12,7 @@ using Soenneker.Zelos.Database.Util.Abstract;
 namespace Soenneker.Zelos.Container.Util;
 
 ///<inheritdoc cref="IZelosContainerUtil"/>
-public class ZelosContainerUtil : IZelosContainerUtil
+public sealed class ZelosContainerUtil : IZelosContainerUtil
 {
     private readonly ILogger<ZelosContainerUtil> _logger;
 
@@ -48,8 +48,6 @@ public class ZelosContainerUtil : IZelosContainerUtil
     {
         _logger.LogDebug("Disposing of ZelosContainerUtil...");
 
-        GC.SuppressFinalize(this);
-
         _containers.Dispose();
     }
 
@@ -60,8 +58,6 @@ public class ZelosContainerUtil : IZelosContainerUtil
     public ValueTask DisposeAsync()
     {
         _logger.LogDebug("Disposing of ZelosContainerUtil...");
-
-        GC.SuppressFinalize(this);
 
         return _containers.DisposeAsync();
     }

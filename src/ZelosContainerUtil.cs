@@ -1,5 +1,4 @@
 ﻿using Soenneker.Zelos.Container.Util.Abstract;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -16,17 +15,14 @@ public sealed class ZelosContainerUtil : IZelosContainerUtil
 {
     private readonly ILogger<ZelosContainerUtil> _logger;
 
-    private readonly SingletonDictionary<IZelosContainer> _containers;
+    private readonly SingletonDictionary<IZelosContainer, string, string> _containers;
 
     public ZelosContainerUtil(IZelosDatabaseUtil zelosDatabaseUtil, ILogger<ZelosContainerUtil> logger)
     {
         _logger = logger;
 
-        _containers = new SingletonDictionary<IZelosContainer>(async (_, token, obj) =>
+        _containers = new SingletonDictionary<IZelosContainer, string, string>(async (key, token, filePath, containerName) =>
         {
-            var filePath = obj[0] as string;
-            var containerName = obj[1] as string;
-
             IZelosDatabase database = await zelosDatabaseUtil.Get(filePath!, token).NoSync();
             IZelosContainer container = await database.GetContainer(containerName!, token).NoSync();
 
@@ -38,7 +34,7 @@ public sealed class ZelosContainerUtil : IZelosContainerUtil
     {
         containerName = containerName.ToLowerInvariantFast();
 
-        return await _containers.Get($"{filePath}:{containerName}", cancellationToken, filePath, containerName);
+        return await _containers.Get($"{filePath}:{containerName}", filePath, containerName, cancellationToken);
     }
 
     /// <summary>

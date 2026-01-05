@@ -14,20 +14,24 @@ namespace Soenneker.Zelos.Container.Util;
 public sealed class ZelosContainerUtil : IZelosContainerUtil
 {
     private readonly ILogger<ZelosContainerUtil> _logger;
+    private readonly IZelosDatabaseUtil _zelosDatabaseUtil;
 
     private readonly SingletonDictionary<IZelosContainer, string, string> _containers;
 
     public ZelosContainerUtil(IZelosDatabaseUtil zelosDatabaseUtil, ILogger<ZelosContainerUtil> logger)
     {
         _logger = logger;
+        _zelosDatabaseUtil = zelosDatabaseUtil;
 
-        _containers = new SingletonDictionary<IZelosContainer, string, string>(async (key, token, filePath, containerName) =>
-        {
-            IZelosDatabase database = await zelosDatabaseUtil.Get(filePath!, token).NoSync();
-            IZelosContainer container = await database.GetContainer(containerName!, token).NoSync();
+        _containers = new SingletonDictionary<IZelosContainer, string, string>(CreateContainer);
+    }
 
-            return container;
-        });
+    private async ValueTask<IZelosContainer> CreateContainer(string key, CancellationToken token, string filePath, string containerName)
+    {
+        IZelosDatabase database = await _zelosDatabaseUtil.Get(filePath!, token).NoSync();
+        IZelosContainer container = await database.GetContainer(containerName!, token).NoSync();
+
+        return container;
     }
 
     public async ValueTask<IZelosContainer> Get(string filePath, string containerName, CancellationToken cancellationToken = default)

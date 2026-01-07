@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Soenneker.Extensions.String;
 using Soenneker.Extensions.ValueTask;
-using Soenneker.Utils.SingletonDictionary;
+using Soenneker.Dictionaries.Singletons;
 using Soenneker.Zelos.Abstract;
 using Soenneker.Zelos.Database.Util.Abstract;
 
@@ -26,7 +26,7 @@ public sealed class ZelosContainerUtil : IZelosContainerUtil
         _containers = new SingletonDictionary<IZelosContainer, string, string>(CreateContainer);
     }
 
-    private async ValueTask<IZelosContainer> CreateContainer(string key, CancellationToken token, string filePath, string containerName)
+    private async ValueTask<IZelosContainer> CreateContainer(string key, string filePath, string containerName, CancellationToken token)
     {
         IZelosDatabase database = await _zelosDatabaseUtil.Get(filePath!, token).NoSync();
         IZelosContainer container = await database.GetContainer(containerName!, token).NoSync();

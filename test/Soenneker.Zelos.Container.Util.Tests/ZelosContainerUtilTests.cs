@@ -1,23 +1,22 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using AwesomeAssertions;
-using Soenneker.Tests.FixturedUnit;
+using Soenneker.Tests.HostedUnit;
 using Soenneker.Zelos.Abstract;
 using Soenneker.Zelos.Container.Util.Abstract;
-using Xunit;
 
 namespace Soenneker.Zelos.Container.Util.Tests;
 
-[Collection("Collection")]
-public class ZelosContainerUtilTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public class ZelosContainerUtilTests : HostedUnitTest
 {
     private readonly IZelosContainerUtil _util;
 
-    public ZelosContainerUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public ZelosContainerUtilTests(Host host) : base(host)
     {
         _util = Resolve<IZelosContainerUtil>(true);
     }
 
-    [Fact]
+    [Test]
     public async ValueTask GetContainer_should_get_container()
     {
         IZelosContainer container = await _util.Get("test.json", "test", CancellationToken);

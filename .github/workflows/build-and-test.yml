@@ -38,7 +38,7 @@ jobs:
         run: dotnet build test/Soenneker.Zelos.Container.Util.Tests/Soenneker.Zelos.Container.Util.Tests.csproj --configuration Release --no-restore --verbosity minimal
 
       - name: Test
-        run: dotnet test test/Soenneker.Zelos.Container.Util.Tests/Soenneker.Zelos.Container.Util.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
+        run: dotnet test --project test/Soenneker.Zelos.Container.Util.Tests/Soenneker.Zelos.Container.Util.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
 
       - name: Pack
         run: dotnet pack src/Soenneker.Zelos.Container.Util/Soenneker.Zelos.Container.Util.csproj --configuration Release --no-build --no-restore --output . --verbosity minimal

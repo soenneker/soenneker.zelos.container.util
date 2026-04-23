@@ -19,7 +19,7 @@ public class ZelosContainerUtilTests : HostedUnitTest
     [Test]
     public async ValueTask GetContainer_should_get_container()
     {
-        IZelosContainer container = await _util.Get("test.json", "test", CancellationToken);
+        IZelosContainer container = await _util.Get("test.json", "test", System.Threading.CancellationToken.None);
         container.Should().NotBeNull();
     }
 }

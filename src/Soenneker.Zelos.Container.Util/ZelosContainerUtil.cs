@@ -10,7 +10,7 @@ using Soenneker.Zelos.Database.Util.Abstract;
 
 namespace Soenneker.Zelos.Container.Util;
 
-///<inheritdoc cref="IZelosContainerUtil"/>
+/// <inheritdoc cref="IZelosContainerUtil"/>
 public sealed class ZelosContainerUtil : IZelosContainerUtil
 {
     private readonly ILogger<ZelosContainerUtil> _logger;

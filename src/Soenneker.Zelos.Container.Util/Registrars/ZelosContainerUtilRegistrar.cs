@@ -13,6 +13,8 @@ public static class ZelosContainerUtilRegistrar
     /// <summary>
     /// Adds <see cref="IZelosContainerUtil"/> as a singleton service. <para/>
     /// </summary>
+    /// <param name="services">Service collection that receives the registration.</param>
+    /// <returns>The same service collection, so additional registrations can be chained.</returns>
     public static IServiceCollection AddZelosContainerUtilAsSingleton(this IServiceCollection services)
     {
         services.AddZelosDatabaseUtilAsSingleton().TryAddSingleton<IZelosContainerUtil, ZelosContainerUtil>();
@@ -23,6 +25,8 @@ public static class ZelosContainerUtilRegistrar
     /// <summary>
     /// Adds <see cref="IZelosContainerUtil"/> as a scoped service. <para/>
     /// </summary>
+    /// <param name="services">Service collection that receives the registration.</param>
+    /// <returns>The same service collection, so additional registrations can be chained.</returns>
     public static IServiceCollection AddZelosContainerUtilAsScoped(this IServiceCollection services)
     {
         services.AddZelosDatabaseUtilAsSingleton().TryAddScoped<IZelosContainerUtil, ZelosContainerUtil>();

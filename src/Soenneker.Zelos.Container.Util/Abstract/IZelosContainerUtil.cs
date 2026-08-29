@@ -11,12 +11,12 @@ namespace Soenneker.Zelos.Container.Util.Abstract;
 public interface IZelosContainerUtil : IAsyncDisposable, IDisposable
 {
     /// <summary>
-    /// Gets the value.
+    /// Returns the configured zelos Container used by the Zelos Container.
     /// </summary>
-    /// <param name="filePath">The file path.</param>
-    /// <param name="containerName">The container name.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task containing the result of the operation.</returns>
+    /// <param name="filePath">Path of the file to use.</param>
+    /// <param name="containerName">Name of the container to target.</param>
+    /// <param name="cancellationToken">Token used to cancel the operation.</param>
+    /// <returns>A task whose result is the requested zelos Container.</returns>
     ValueTask<IZelosContainer> Get(string filePath, string containerName, CancellationToken cancellationToken = default);
 
 }

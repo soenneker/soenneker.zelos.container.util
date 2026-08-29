@@ -3,11 +3,40 @@
 [![](https://img.shields.io/nuget/dt/soenneker.zelos.container.util.svg?style=for-the-badge)](https://www.nuget.org/packages/soenneker.zelos.container.util/)
 [![](https://img.shields.io/github/actions/workflow/status/soenneker/soenneker.zelos.container.util/codeql.yml?label=CodeQL&style=for-the-badge)](https://github.com/soenneker/soenneker.zelos.container.util/actions/workflows/codeql.yml)
 
-# ![](https://user-images.githubusercontent.com/4441470/224455560-91ed3ee7-f510-4041-a8d2-3fc093025112.png) Soenneker.Zelos.Container.Util
-### A DI utility that simplifies Zelos database and container access
+# Soenneker.Zelos.Container.Util
 
-## Installation
+A DI utility that simplifies Zelos database and container access.
 
-```
+## Install
+
+```bash
 dotnet add package Soenneker.Zelos.Container.Util
 ```
+
+## Quick start
+
+```csharp
+using Soenneker.Zelos.Container.Util.Registrars;
+using Microsoft.Extensions.DependencyInjection;
+
+var services = new ServiceCollection();
+var result = services.AddZelosContainerUtilAsSingleton();
+```
+
+Adds `IZelosContainerUtil` as a singleton service.
+
+## What you get
+
+- `IZelosContainerUtil` — A DI utility that simplifies Zelos database and container access.
+- `ZelosContainerUtilRegistrar` — A DI utility that simplifies Zelos database and container access.
+
+## API at a glance
+
+| API | What it does | Result / important behavior |
+| --- | --- | --- |
+| `ZelosContainerUtilRegistrar.AddZelosContainerUtilAsSingleton(services)` | Adds `IZelosContainerUtil` as a singleton service. | The same service collection, so additional registrations can be chained. |
+| `ZelosContainerUtilRegistrar.AddZelosContainerUtilAsScoped(services)` | Adds `IZelosContainerUtil` as a scoped service. | The same service collection, so additional registrations can be chained. |
+
+## Practical notes
+
+- Dispose instances you own when their scope ends so held resources can be released.

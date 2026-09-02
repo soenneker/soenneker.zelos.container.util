@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using AwesomeAssertions;
 using Soenneker.Tests.HostedUnit;
@@ -17,9 +18,9 @@ public class ZelosContainerUtilTests : HostedUnitTest
     }
 
     [Test]
-    public async ValueTask GetContainer_should_get_container()
+    public async ValueTask GetContainer_should_get_container(CancellationToken cancellationToken)
     {
-        IZelosContainer container = await _util.Get("test.json", "test", System.Threading.CancellationToken.None);
+        IZelosContainer container = await _util.Get("test.json", "test", cancellationToken);
         container.Should().NotBeNull();
     }
 }
